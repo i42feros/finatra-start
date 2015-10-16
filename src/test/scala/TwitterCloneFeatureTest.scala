@@ -34,6 +34,22 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito with HttpTest {
         }""")
   }
 
+  "Missing message field" in {
+    server.httpPost(
+      path = "/tweet",
+      postBody = """
+         {
+          "location": {
+            "lat": "37.7821120598956",
+            "long": "-122.400612831116"
+          },
+          "nsfw": false
+        }""",
+        andExpect = BadRequest
+    )
+  }
+
+
   "Server" should {
     "Say hi" in {
       server.httpGet(
