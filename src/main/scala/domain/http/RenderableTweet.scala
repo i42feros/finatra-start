@@ -9,9 +9,9 @@ case class RenderableTweet(
   nsfw: Boolean)
 
 object RenderableTweet {
-  def fromDomain(tweet: Tweet, statusId: StatusId) =
+  def fromDomain(tweet: Tweet) =
     RenderableTweet(
-    id = statusId,
+    id = "",
     message = tweet.message,
     location = tweet.location map {RenderableLocation.fromDomain},
     nsfw = tweet.nsfw

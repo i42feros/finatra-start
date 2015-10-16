@@ -1,19 +1,26 @@
 package controllers
 
+import javax.inject.{Inject, Singleton}
+
 import com.twitter.finagle.httpx.Request
 import com.twitter.finatra.http.Controller
 import domain.Tweet
 import domain.http.{RenderableTweet, StatusId, TweetResponse, TweetPostRequest}
+import services.TweetsService
 
-class TweetsController extends Controller {
+@Singleton
+class TweetsController @Inject()(
+  tweetsService: TweetsService)
+  extends Controller {
+
   post("/tweet") { postedTweet: Tweet =>
-    val statusId = StatusId("123")
+    tweetsService.save(postedTweet) map { tweet =>
+      val renderableTweet = RenderableTweet.fromDomain(tweet)
+      response
+        .created(renderableTweet)
+        .location(renderableTweet.id)
+    }
 
-    // Save status here
-    val renderableTweet = RenderableTweet.fromDomain(postedTweet, statusId)
-    response
-      .created(renderableTweet)
-      .location(renderableTweet.id)
   }
 
   get("/hi") { request: Request =>
