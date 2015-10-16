@@ -6,8 +6,8 @@ import domain.Tweet
 import domain.http.{TweetResponse, TweetPostRequest}
 
 class TweetsController extends Controller {
-  post("/tweet") { postedTweet: Request =>
-    response.created("hello").location("/tweet/123")
+  post("/tweet") { postedTweet: Tweet =>
+    response.created(postedTweet).location("/tweet/123")
   }
 
   get("/hi") { request: Request =>

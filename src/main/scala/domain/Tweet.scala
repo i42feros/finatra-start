@@ -1,4 +1,4 @@
 package domain
 
-case class Tweet(text: String, location: Option[Location], nsfw: Boolean = false)
+case class Tweet(message: String, location: Option[Location], nsfw: Boolean = false)
 
