@@ -39,7 +39,7 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito with HttpTest {
       server.httpGet(
         path = "/hi",
         andExpect = Ok,
-        withBody = "Hello Sonia")
+        withBody = "Hello world")
     }
   }
 }
