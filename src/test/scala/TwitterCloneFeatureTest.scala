@@ -49,6 +49,21 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito with HttpTest {
     )
   }
 
+  "Invalid fields" in {
+    server.httpPost(
+      path = "/tweet",
+      postBody = """
+         {
+          "message": "",
+          "location": {
+            "lat": "9999.0",
+            "long": "-122.400612831116"
+          },
+          "nsfw": false
+        }""",
+      andExpect = BadRequest
+    )
+  }
 
   "Server" should {
     "Say hi" in {
