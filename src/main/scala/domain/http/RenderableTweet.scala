@@ -1,17 +1,17 @@
 package domain.http
 
-import domain.Tweet
+import domain.{TweetId, Tweet}
 
 case class RenderableTweet(
-  id: StatusId,
+  id: TweetId,
   message: String,
   location: Option[RenderableLocation],
   nsfw: Boolean)
 
 object RenderableTweet {
-  def fromDomain(tweet: Tweet, statusId: StatusId) =
+  def fromDomain(id: TweetId, tweet: Tweet) =
     RenderableTweet(
-    id = statusId,
+    id = id,
     message = tweet.message,
     location = tweet.location map {RenderableLocation.fromDomain},
     nsfw = tweet.nsfw
