@@ -4,6 +4,7 @@ import com.twitter.finatra.http.filters.CommonFilters
 import com.twitter.finatra.http.routing.HttpRouter
 import controllers.TweetsController
 import firebase.FirebaseHttpClientModule
+import warmup.TwitterCloneWarmup
 
 object TwitterCloneServerMain extends TwitterCloneServer
 
@@ -14,6 +15,10 @@ class TwitterCloneServer extends HttpServer {
     router
       .filter[CommonFilters]
       .add[TweetsController]
+  }
+
+  override def warmup() {
+    run[TwitterCloneWarmup]()
   }
 
 }

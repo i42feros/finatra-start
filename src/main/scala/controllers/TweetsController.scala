@@ -15,7 +15,6 @@ class TweetsController @Inject()(
 
   post("/tweet") { postedTweet: Tweet =>
     tweetsService.save(postedTweet) map { renderableTweet =>
-//      val renderableTweet = RenderableTweet.fromDomain(tweet)
       response
         .created(renderableTweet)
         .location(renderableTweet.id)

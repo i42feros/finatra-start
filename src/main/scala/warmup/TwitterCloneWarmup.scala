@@ -1,0 +1,22 @@
+package warmup
+
+import javax.inject.{Inject, Singleton}
+
+import com.twitter.finatra.http.routing.HttpWarmup
+import com.twitter.finatra.httpclient.RequestBuilder.{get, post}
+import com.twitter.finatra.utils.Handler
+
+@Singleton
+class TwitterCloneWarmup @Inject()(
+  httpWarmup: HttpWarmup)
+  extends Handler {
+  override def handle(): Unit = {
+    httpWarmup.send(
+      post("/tweet/").body("{}"),
+      times = 5)
+
+    httpWarmup.send(
+      get("/tweet/123"),
+      times = 5)
+  }
+}
