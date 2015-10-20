@@ -12,7 +12,7 @@ class TwitterCloneWarmup @Inject()(
   extends Handler {
   override def handle(): Unit = {
     httpWarmup.send(
-      post("/tweet/").body("{}"),
+      post("/tweet").body("{}"),
       times = 5)
 
     httpWarmup.send(

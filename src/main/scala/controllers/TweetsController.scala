@@ -5,7 +5,7 @@ import javax.inject.{Inject, Singleton}
 import com.twitter.finagle.httpx.Request
 import com.twitter.finatra.http.Controller
 import domain.Tweet
-import domain.http.RenderableTweet
+import domain.http.{TweetGetRequest, RenderableTweet}
 import services.TweetsService
 
 @Singleton
@@ -22,7 +22,7 @@ class TweetsController @Inject()(
 
   }
 
-  get("/hi") { request: Request =>
-    "Hello world"
+  get("/tweet/:id") { tweetGetRequest: TweetGetRequest =>
+    tweetsService.getResponseTweet(tweetGetRequest.id)
   }
 }

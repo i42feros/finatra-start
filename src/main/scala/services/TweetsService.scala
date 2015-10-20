@@ -21,6 +21,12 @@ class TweetsService @Inject()(
     } yield renderableTweet
   }
 
+  def getResponseTweet(tweetId: TweetId): Future[Option[TweetResponse]] = {
+    firebase.get[TweetResponse](
+      firebaseUrl(tweetId))
+  }
+
+
   private def firebaseUrl(tweetId: TweetId): String = {
     s"/tweets/${tweetId.id }.json"
   }

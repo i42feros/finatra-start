@@ -8,6 +8,7 @@ class TwitterCloneStartupTest extends Test {
     stage = Stage.PRODUCTION,
     twitterServer = new TwitterCloneServer,
     clientFlags = Map(
+    // Allow the server to start by having an empty list of hosts in the firebase flag
     "com.twitter.server.resolverMap" -> "firebase=nil!"))
 
   "server" in {

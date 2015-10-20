@@ -8,6 +8,10 @@ import com.twitter.finatra.utils.RetryPolicyUtils._
 
 object FirebaseHttpClientModule extends HttpClientModule {
 
+
+  private val sslHostFlag = flag("firebase.host", "", "firebase hostname")
+
+  override def sslHostname = Some(sslHostFlag())
   override val dest = "flag!firebase"
 
   override def retryPolicy = Some(exponentialRetry(
