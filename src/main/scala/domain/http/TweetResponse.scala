@@ -1,6 +1,7 @@
 package domain.http
 
-import domain.{Tweet}
+import domain.{Location, TweetId, Tweet}
+
 
 case class TweetResponse(
                           message: String,

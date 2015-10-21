@@ -1,6 +1,6 @@
 maven_layout()
 
-target(name='twitter-clone',
+target(name='finatra-start',
   dependencies=[
     'finatra-start/src/main/scala'
   ]
@@ -14,10 +14,10 @@ target(name='tests',
 
 jvm_binary(
   name='bin',
-  basename='scala-finatra',
+  basename='finatra-start',
   main='TwitterCloneServerMain',
   dependencies=[
-    ':twitter-clone'
+    ':finatra-start'
   ],
   excludes=[
     exclude('org.slf4j', 'slf4j-jdk14'),

@@ -3,6 +3,11 @@ name := "finatra-start"
 scalaVersion := "2.11.7"
 
 
+assemblyMergeStrategy in assembly := {
+  case "BUILD" => MergeStrategy.discard
+  case other => MergeStrategy.defaultMergeStrategy(other)
+}
+
 libraryDependencies ++= Seq(
   "com.twitter.finatra" %% "finatra-http" % "2.1.0",
   "com.twitter.finatra" %% "finatra-httpclient" % "2.1.0",

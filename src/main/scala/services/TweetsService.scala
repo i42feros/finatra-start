@@ -12,6 +12,9 @@ class TweetsService @Inject()(
  idService: IdService,
  firebase: FirebaseClient) {
 
+  def getResponseTweets(max: Int): Option[List[TweetResponse]] = ???
+
+
   def save(postedTweet: Tweet): Future[RenderableTweet] = {
     for {
       id <- idService.getId()

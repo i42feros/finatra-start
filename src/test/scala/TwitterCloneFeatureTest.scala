@@ -4,9 +4,9 @@ import com.twitter.finatra.http.test.{EmbeddedHttpServer, HttpTest}
 import com.twitter.inject.Mockito
 import com.twitter.inject.server.FeatureTest
 import com.twitter.finagle.httpx.Status._
-import com.twitter.util.Future
+import com.twitter.util.{Return, ConstFuture, Future}
 import domain.{Location, Tweet, TweetId}
-import domain.http.RenderableTweet
+import domain.http.{TweetLocation, TweetResponse, RenderableTweet}
 import firebase.FirebaseClient
 import services.IdService
 
@@ -32,7 +32,7 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito {
     firebaseClient.put("/tweets/123.json", putTweet) returns Future.Unit
 
     val result = server.httpPost(
-      path = "/tweet",
+      path = "/tweets",
       postBody = """
         {
           "message": "Hello world",
@@ -43,7 +43,7 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito {
           "nsfw": false
         }""",
       andExpect = Created,
-      withLocation = "/tweet/123",
+      withLocation = "/tweets/123",
       withJsonBody = """
         {
           "id": "123",
@@ -58,7 +58,7 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito {
 
   "Missing message field" in {
     server.httpPost(
-      path = "/tweet",
+      path = "/tweets",
       postBody = """
          {
           "location": {
@@ -73,7 +73,7 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito {
 
   "Invalid fields" in {
     server.httpPost(
-      path = "/tweet",
+      path = "/tweets",
       postBody = """
          {
           "message": "",
@@ -88,11 +88,23 @@ class TwitterCloneFeatureTest extends FeatureTest with Mockito {
   }
 
   "Server" should {
-    "Say hi" in {
+    "Get a tweet" in {
+      val tweet: TweetResponse = TweetResponse("Hello world", Some(TweetLocation(37.7821120598956d, -122.400612831116d)), false)
+
+      firebaseClient.get[TweetResponse]("/tweets/123.json") returns Future(Some(tweet))
+
       server.httpGet(
-        path = "/hi",
+        path = "/tweets/123",
         andExpect = Ok,
-        withBody = "Hello world")
+        withJsonBody = """
+        {
+          "message": "Hello world",
+          "location": {
+            "lat": 37.7821120598956,
+            "long": -122.400612831116
+          },
+          "nsfw": false
+        }""")
     }
   }
 }
