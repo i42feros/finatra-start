@@ -14,6 +14,4 @@ class TwitterCloneStartupTest extends Test {
   "server" in {
     server.assertHealthy()
   }
-
-
 }
